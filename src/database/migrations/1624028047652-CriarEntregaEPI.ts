@@ -54,7 +54,7 @@ export class CriarEntregaEPI1624028047652 implements MigrationInterface {
                         name:'FKEPI',
                         referencedTableName:'EPIs',
                         referencedColumnNames:['id'],
-                        columnNames: ['EPI_id'],
+                        columnNames: ['epi_id'],
                         onDelete: 'SET NULL',
                         onUpdate:'SET NULL'
                     }
