@@ -4,7 +4,6 @@ import {EPIDeliversService} from '../services/EPIDeliversService'
 class EPIDeliversController{
     async create(request: Request, response: Response){
         let {employee_id,epi_id,delivery_date,delivered_quantity} = request.body
-
         const epiDeliversService = new EPIDeliversService()
         delivery_date = new Date(delivery_date)
 

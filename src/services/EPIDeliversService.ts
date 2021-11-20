@@ -34,7 +34,7 @@ class EPIDeliversService{
         }*/
 
         const delivers = deliverService.create({employee_id,epi_id,delivery_date,delivered_quantity})
-        
+        await deliverService.save(delivers)
         return delivers
     }
 
