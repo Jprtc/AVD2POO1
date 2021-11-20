@@ -22,7 +22,7 @@ class EPIdeliver{
     epi: EPI
 
     @Column()
-    EPI_id: string
+    epi_id: string
 
     @Column()
     delivery_date:Date

@@ -12,6 +12,12 @@ routes.post('/funcionarios', employeesController.create)
 
 routes.post('/epi',episController.create)
 
+routes.post('/entregaepi',epiDeliversController.create)
+
+routes.get('/entregaepi',epiDeliversController.index)
+routes.delete('/entregaepi/:id',epiDeliversController.delete)
+routes.put('/entregaepi/:id',epiDeliversController.update)
+
 
 
 
