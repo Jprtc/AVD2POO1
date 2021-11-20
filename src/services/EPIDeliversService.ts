@@ -24,18 +24,17 @@ class EPIDeliversService{
     async create({employee_id,epi_id,delivery_date,delivered_quantity}: IDeliversServiceCreate){
         const deliverService = getCustomRepository(EPIsdeliversRepository)
 
-        // const employee = await deliverService.findOne({employee_id})
-        // const epi = await deliverService.findOne({epi_id})
-        // if(!employee){
-        //     throw new Error('Id do funcionário inválido!')
-        // }
-        // if(!epi){
-        //     throw new Error('Id do epi inválido!')
-        // }
+        const employee = await deliverService.findOne({employee_id})
+        const epi = await deliverService.findOne({epi_id})
+        if(!employee){
+            throw new Error('Id do funcionário inválido!')
+        }
+        if(!epi){
+            throw new Error('Id do epi inválido!')
+        }
+
         const delivers = deliverService.create({employee_id,epi_id,delivery_date,delivered_quantity})
-
-
-        await deliverService.save(delivers)
+        
         return delivers
     }
 
