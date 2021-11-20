@@ -24,14 +24,14 @@ class EPIDeliversService{
     async create({employee_id,epi_id,delivery_date,delivered_quantity}: IDeliversServiceCreate){
         const deliverService = getCustomRepository(EPIsdeliversRepository)
 
-        const employee = await deliverService.findOne({employee_id})
+        /*const employee = await deliverService.findOne({employee_id})
         const epi = await deliverService.findOne({epi_id})
         if(!employee){
             throw new Error('Id do funcionário inválido!')
         }
         if(!epi){
             throw new Error('Id do epi inválido!')
-        }
+        }*/
 
         const delivers = deliverService.create({employee_id,epi_id,delivery_date,delivered_quantity})
         
@@ -66,18 +66,20 @@ class EPIDeliversService{
         const deliverService = getCustomRepository(EPIsdeliversRepository)
 
         const delivers = await deliverService.findOne({id})
-        const employee = await deliverService.findOne({employee_id})
-        const epi = await deliverService.findOne({epi_id})
 
         if(!delivers){
             throw new Error('Não há entregas com esse ID registrada')
         }
+        
+        /*const employee = await deliverService.findOne({employee_id})
+        const epi = await deliverService.findOne({epi_id})
+        
         if(!employee){
             throw new Error('Não há funcionários com esse ID registrada')
         }
         if(!epi){
             throw new Error('Não há epis com esse ID registrada')
-        }
+        }*/
 
         await deliverService.update(id,{employee_id,epi_id,delivery_date,delivered_quantity})
         const updatedDelivers = await deliverService.findOne({id})
