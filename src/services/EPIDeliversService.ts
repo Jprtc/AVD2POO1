@@ -1,5 +1,7 @@
 import {getCustomRepository} from 'typeorm'
+import { EmployeesRepository } from '../repositories/EmployeesRepository'
 import {EPIsdeliversRepository} from '../repositories/EPIsDeliversRepository'
+import { EPIsRepository } from '../repositories/EPIsRepository'
 
 interface IDeliversServiceCreate{
     employee_id:string;
@@ -24,16 +26,25 @@ class EPIDeliversService{
     async create({employee_id,epi_id,delivery_date,delivered_quantity}: IDeliversServiceCreate){
         const deliverService = getCustomRepository(EPIsdeliversRepository)
 
-        /*const employee = await deliverService.findOne({employee_id})
-        const epi = await deliverService.findOne({epi_id})
+        const employeeRepository = getCustomRepository(EmployeesRepository)
+        const epiRepository = getCustomRepository(EPIsRepository)
+
+        //Só assim pra funcionar corretamente msm
+        const employee = await employeeRepository.findOne({id: employee_id});
+        const epi = await epiRepository.findOne({id: epi_id});
+        
+        // console.log(employee)
+        // console.log(epi)
+
         if(!employee){
-            throw new Error('Id do funcionário inválido!')
+            throw new Error("Não há funcionário com esse id");
         }
         if(!epi){
-            throw new Error('Id do epi inválido!')
-        }*/
+            throw new Error("não há epi com esse ID");
+        }
 
         const delivers = deliverService.create({employee_id,epi_id,delivery_date,delivered_quantity})
+        // console.log(delivers)
         await deliverService.save(delivers)
         return delivers
     }
@@ -64,22 +75,24 @@ class EPIDeliversService{
 
     async update({id,employee_id,epi_id,delivery_date,delivered_quantity}:IDeliversServiceUpdate){
         const deliverService = getCustomRepository(EPIsdeliversRepository)
+        const employeeRepository = getCustomRepository(EmployeesRepository)
+        const epiRepository = getCustomRepository(EPIsRepository)
 
         const delivers = await deliverService.findOne({id})
 
         if(!delivers){
             throw new Error('Não há entregas com esse ID registrada')
         }
-        
-        /*const employee = await deliverService.findOne({employee_id})
-        const epi = await deliverService.findOne({epi_id})
-        
+
+        const employee = await employeeRepository.findOne({id: employee_id});
+        const epi = await epiRepository.findOne({id: epi_id});
+
         if(!employee){
-            throw new Error('Não há funcionários com esse ID registrada')
+            throw new Error("Não há funcionário com esse id");
         }
         if(!epi){
-            throw new Error('Não há epis com esse ID registrada')
-        }*/
+            throw new Error("não há epi com esse ID");
+        }
 
         await deliverService.update(id,{employee_id,epi_id,delivery_date,delivered_quantity})
         const updatedDelivers = await deliverService.findOne({id})
